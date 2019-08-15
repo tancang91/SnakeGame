@@ -9,6 +9,7 @@ const int width = 20;
 
 int main()
 {
+
 	//BoardGame board(rows, cols, width);
 	Game* g = new Game(rows, cols, width);
 	g->run();

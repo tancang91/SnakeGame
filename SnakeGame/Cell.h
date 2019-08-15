@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-enum CellType { CellEmpty = 0, CellFood, CellSnakePart };
+enum CellType { CellEmpty = 0, CellFood, CellSnakePart, CellHead };
 
 class Cell: public sf::Drawable
 {

@@ -39,11 +39,14 @@ void Cell::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	sf::Color color;
 	switch (_type)
 	{
-	case CellFood:
-		color = sf::Color::Magenta;
+	case CellHead:
+		color = sf::Color::Red;
 		break;
 	case CellSnakePart:
 		color = sf::Color::Green;
+		break;
+	case CellFood:
+		color = sf::Color::Magenta;
 		break;
 	default:
 		color = sf::Color::Color();

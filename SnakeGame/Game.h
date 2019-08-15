@@ -6,16 +6,23 @@
 class Game
 {
 public:
-	Game(const BoardGame* const board);
+	enum EDirection { UP = 0, RIGHT, DOWN, LEFT };
+
 	Game(int width_, int heigh_, int w);
+	~Game();
+
 	void run();
 
 private:
 	Snake _snake;
 	BoardGame _board;
-	sf::RenderWindow _window;
+	sf::RenderWindow _window; 
+	EDirection _eDirection;
 
+	void updateDirection();
 	void update();
 	void render();
+	
+
 };
 
