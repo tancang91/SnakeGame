@@ -1,5 +1,6 @@
 #include "BoardGame.h"
 #include <stdlib.h>
+#include "Helper.h"
 
 // TODO
 BoardGame::BoardGame() : width(0), height(0), cellWidth(0), _food(nullptr)
@@ -25,6 +26,16 @@ BoardGame::~BoardGame()
 {
 	delete _food;
 	_food = nullptr;
+}
+
+size_t BoardGame::rows()
+{
+	return height / cellWidth;
+}
+
+size_t BoardGame::columns()
+{
+	return width / cellWidth;
 }
 
 Cell* BoardGame::food() const
@@ -66,23 +77,16 @@ void BoardGame::_generateFood()
 
 Cell* BoardGame::getCell(int i, int j)
 {
-	int idx = _index(i, j);
-	if (_index(i, j) == -1)
-	{
-		return nullptr;
-	}
-	return &_grid[idx];
+	int rows = height / cellWidth;
+	int cols = width / cellWidth;
+
+	if (i < 0 || j < 0 || i >= rows || j >= cols) { return nullptr; }
+
+	return &_grid[SnakeGame::index(i, j, cols)];
 }
 
 Cell& BoardGame::getCell(int id)
 {
 	return _grid[id];
 }
-int BoardGame::_index(int i, int j) const
-{
-	int rows = height / cellWidth;
-	int cols = width / cellWidth;
 
-	if (i < 0 || j < 0 || i >= rows || j >= cols) { return -1; }
-	return i * cols + j;
-};

@@ -22,8 +22,7 @@ int Cell::col() const
 int Cell::row() const
 {
 	return i;
-}
-;
+};
 
 void Cell::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

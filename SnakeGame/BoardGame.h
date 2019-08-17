@@ -12,6 +12,9 @@ public:
 	~BoardGame();
 
 
+	size_t rows();
+	size_t columns();
+
 	Cell* food() const;
 	Cell* food(const bool& newfood);
 
@@ -23,6 +26,5 @@ private:
 	Cell* _food;
 
 	void _generateFood();
-	int _index(int i, int j) const;
 };
 

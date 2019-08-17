@@ -22,6 +22,14 @@ const std::list<Cell>& Snake::getBody() const
 	return _snakePartList;
 }
 
+void Snake::clearBody()
+{
+	while (!_snakePartList.empty())
+	{
+		_snakePartList.pop_back();
+	}
+};
+
 void Snake::move(Cell& nextCell)
 {
 	auto tail = _snakePartList.back();

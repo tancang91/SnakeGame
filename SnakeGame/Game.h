@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "BoardGame.h"
 #include "Snake.h"
+#include "Helper.h"
 
 class Game
 {
@@ -18,11 +19,11 @@ private:
 	BoardGame _board;
 	sf::RenderWindow _window; 
 	EDirection _eDirection;
+	bool _isGameOver;
 
+	void setup();
 	void updateDirection();
 	void update();
 	void render();
-	
-
 };
 

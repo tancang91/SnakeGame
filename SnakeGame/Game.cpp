@@ -1,19 +1,29 @@
 #include "Game.h"
 #include <iostream>
 
+
 Game::Game(int width_, int heigh_, int w)
 	: _board(width_, heigh_, w)
 	, _snake({ 0,0,0 })
 	, _window(sf::VideoMode(width_, heigh_), "Snake game")
-	, _eDirection(EDirection::RIGHT)
+	, _eDirection()
+	, _isGameOver()
 {
-	_snake.setHead(*_board.getCell(0, 1));
-	_snake.grow(*_board.getCell(0, 0));
-	_board.food(true);
+	setup();
 }
+
 Game::~Game()
 {
-};
+}
+
+void Game::setup()
+{
+	_eDirection = EDirection::RIGHT;
+	_isGameOver = false;
+	_board.food(true);
+	_snake.setHead(*_board.getCell(0, 1));
+	_snake.grow(*_board.getCell(0, 0));
+}
 
 void Game::run()
 {
@@ -25,6 +35,20 @@ void Game::run()
 		{
 			if (event.type == sf::Event::Closed)
 				_window.close();
+		}
+		// Game logic
+		if (_isGameOver)
+		{
+			std::cout << "Game over: Y for conntinue" << std::endl;
+			while (true)
+			{
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+				{
+					SnakeGame::reset(_board, _snake);
+					setup();
+					break;
+				}
+			}
 		}
 		render();
 		update();
@@ -66,28 +90,31 @@ void Game::update()
 	}
 
 	Cell* next = _board.getCell(i, j);
-	if (next != nullptr)
+	if (next)
 	{
-		std::cout << i << ", " << j << std::endl;
 		_snake.move(*next);
 	}
 
+	if (SnakeGame::checkBodyCollision(_snake, _board) || SnakeGame::checkWallCollision(_board, i, j))
+	{
+		//std::cout << "Food " << i_food << ", " << j_food << std::endl;
+		_isGameOver = true;
+	}
 };
 
 void Game::render()
 {
 	_window.clear();
-
 	_window.draw(_snake.getHead()); // draw head
 	_window.draw(*_board.food());	// draw food
 
-	auto body = _snake.getBody();
+	const std::list<Cell>& body = _snake.getBody();
 	for (auto& b : body)
 	{
 		_window.draw(b);
 	};
 	_window.display();
-};
+}
 
 void Game::updateDirection()
 {
@@ -108,6 +135,3 @@ void Game::updateDirection()
 		_eDirection = EDirection::DOWN;
 	}
 }
-
-
-
